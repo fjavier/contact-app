@@ -1,19 +1,52 @@
 import Contact from "../model/Contact";
-import {useEffect, useRef} from "react";
+import {useEffect, useRef, useState} from "react";
 
-export default function FormContact({agregar, contactSelected}) {
+export default function FormContact({agregar, contactSelected, updateContactSelected}) {
 
     const nombre = useRef("");
     const apellido = useRef("");
 
     const form = useRef();
 
+    useEffect(
+        ()=>{
+            if(!selectedIsEmpty()){
+                nombre.current.value = contactSelected.nombre;
+                apellido.current.value = contactSelected.apellido;
+            }
+        },
+        [contactSelected]
+    );
+
     const handleSubmit = event => {
         event.preventDefault();
+        if(selectedIsEmpty()){
+            addNewContact();
+            form.current.reset();
+        }else{
+            updateContact();
+        }
+
+    };
+
+    const addNewContact= () => {
         const contacto = new Contact(nombre.current.value, apellido.current.value, true);
-        form.current.reset();
         agregar(contacto);
     };
+
+    function updateContact(){
+        console.log(nombre.current.value);
+        console.log(apellido.current.value);
+    }
+
+    function clear(){
+        updateContactSelected({});
+        form.current.reset();
+    }
+
+    const selectedIsEmpty = ()=>{
+        return Object.keys(contactSelected).length==0;
+    }
 
     return (
         <>
@@ -38,7 +71,10 @@ export default function FormContact({agregar, contactSelected}) {
                        placeholder={"Apellido"}
                        type={"text"}
                        id={"apellido"}/>
-                <button type={"submit"}> Agregar</button>
+                <button type={"submit"}> { selectedIsEmpty() ? "Agregar" : "Actualizar" }</button>
+                {
+                    !selectedIsEmpty() && <button type={"button"} onClick={clear} >Cancelar</button>
+                }
             </form>
         </>
     )

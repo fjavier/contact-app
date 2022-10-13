@@ -12,18 +12,19 @@ export const ContactMain = () => {
 
     const [contacts, setcontacts] = useState(contactList);
 
-    const  [contactSelected, setContactSelected] = useState({});
+    const  [contactSelected, setcontactSelected] = useState({});
 
     const addNewContact = (contact) => {
         setcontacts([...contacts, contact]);
     }
 
+    const updateContacts = () => {};
+
+
     const selectContact = (contact) => {
-        console.log(contact);
-        setContactSelected((prev) => {
-            return {...prev, contact};
+        setcontactSelected(()=> {
+            return contact;
         });
-        console.log(contactSelected);
     };
 
     return (
@@ -35,17 +36,21 @@ export const ContactMain = () => {
                 <div id={"container"}>
                     {
                         contacts.map((contacto, index)=>
-                            <p key={index}>
+                            <div key={index}>
                                 <span>{contacto.activo ? ":)" : ":("}</span>
-                                {contacto.nombre + " " + contacto.apellido}
-                                <button onClick={() => selectContact(contacto)}>Editar</button>
-                            </p>
+                                <span>{contacto.nombre + " " + contacto.apellido}</span>
+                                <button onClick={() => selectContact(contacto)}>
+                                    Editar
+                                </button>
+                            </div>
                         )
                     }
                 </div>
             </div>
 
-            <FormContact agregar={addNewContact} contactSelected={contactSelected} />
+            <FormContact agregar={addNewContact}
+                         updateContactSelected={setcontactSelected}
+                         contactSelected={contactSelected}  />
         </>
 
     )
