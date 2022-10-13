@@ -48,9 +48,10 @@ export const ContactMain = () => {
                             <div key={index}>
                                 <span>{contacto.activo ? ":)" : ":("}</span>
                                 <span>{contacto.nombre + " " + contacto.apellido}</span>
-                                <button onClick={() => selectContact(contacto)}>
-                                    Editar
-                                </button>
+                                <i style={{"cursor":"pointer"}} className={"bi bi-pencil-fill"}
+                                   onClick={() => selectContact(contacto)}>
+
+                                </i>
                             </div>
                         )
                     }

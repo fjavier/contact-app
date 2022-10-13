@@ -61,7 +61,7 @@ export default function FormContact({agregar,
                 <h2>Agregar contacto</h2>
             </div>
             <form id={"add-contact"} ref={form} onSubmit={handleSubmit}>
-                <label
+                <label className={"form-label"}
                     htmlFor="nombre">
                     Nombre:
                 </label>
@@ -69,18 +69,20 @@ export default function FormContact({agregar,
                     required ref={nombre}
                     placeholder={"Nombre"}
                     type={"text"}
+                    className={"form-control"}
                     id={"nombre"}/>
-                <label htmlFor="apellido">
+                <label htmlFor="apellido" className={"form-label"}>
                     Apellido:
                 </label>
                 <input required
                        ref={apellido}
                        placeholder={"Apellido"}
                        type={"text"}
+                       className={"form-control"}
                        id={"apellido"}/>
-                <button type={"submit"}> { selectedIsEmpty() ? "Agregar" : "Actualizar" }</button>
+                <button className={"btn btn-success"} type={"submit"}> { selectedIsEmpty() ? "Agregar" : "Actualizar" }</button>
                 {
-                    !selectedIsEmpty() && <button type={"button"} onClick={clear} >Cancelar</button>
+                    !selectedIsEmpty() && <button className={"btn btn-danger"} type={"button"} onClick={clear} >Cancelar</button>
                 }
             </form>
         </>
