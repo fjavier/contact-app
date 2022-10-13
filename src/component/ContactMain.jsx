@@ -4,22 +4,31 @@ import FormContact from "./FormContact";
 
 export const ContactMain = () => {
 
-    const contactList = [
-        new Contact("Francisco","Briceño", true),
-        new Contact("Nombre","Apellido", true),
-        new Contact("Nombre","Apellido", true)
+    const dummieData = [
+        new Contact(1,"Francisco","Briceño", true),
+        new Contact(2,"Nombre","Apellido", true),
+        new Contact(3,"Nombre","Apellido", true)
     ];
 
-    const [contacts, setcontacts] = useState(contactList);
+    const [contacts, setcontacts] = useState(dummieData);
 
     const  [contactSelected, setcontactSelected] = useState({});
 
     const addNewContact = (contact) => {
+        contact.id = contacts.length+1;
         setcontacts([...contacts, contact]);
     }
 
-    const updateContacts = () => {};
+    const updateContacts = (contact) => {
+        const contactListUpdated = contacts.map((contactToUpdate) => {
+            if(contactToUpdate.id===contact.id){
+                return contact;
+            }
+            return contactToUpdate;
+        });
 
+        setcontacts(contactListUpdated);
+    }
 
     const selectContact = (contact) => {
         setcontactSelected(()=> {
@@ -50,7 +59,8 @@ export const ContactMain = () => {
 
             <FormContact agregar={addNewContact}
                          updateContactSelected={setcontactSelected}
-                         contactSelected={contactSelected}  />
+                         contactSelected={contactSelected}
+                         actionUpdateContactList={updateContacts}/>
         </>
 
     )

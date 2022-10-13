@@ -1,7 +1,10 @@
 import Contact from "../model/Contact";
-import {useEffect, useRef, useState} from "react";
+import {useEffect, useRef} from "react";
 
-export default function FormContact({agregar, contactSelected, updateContactSelected}) {
+export default function FormContact({agregar,
+                                    contactSelected,
+                                    updateContactSelected,
+                                    actionUpdateContactList}) {
 
     const nombre = useRef("");
     const apellido = useRef("");
@@ -30,13 +33,17 @@ export default function FormContact({agregar, contactSelected, updateContactSele
     };
 
     const addNewContact= () => {
-        const contacto = new Contact(nombre.current.value, apellido.current.value, true);
+        const contacto = new Contact(0,nombre.current.value, apellido.current.value, true);
         agregar(contacto);
     };
 
     function updateContact(){
-        console.log(nombre.current.value);
-        console.log(apellido.current.value);
+        actionUpdateContactList(
+            new Contact(
+                contactSelected.id,
+                nombre.current.value,
+                apellido.current.value,
+                contactSelected.active));
     }
 
     function clear(){
